@@ -20,13 +20,6 @@ class ColorStateWidget extends State<ContentWidget> {
     futureData = fetchAlbum();
   }
 
-  final List<ColorModel> listItems = new List<ColorModel>.generate(500, (i) {
-    return ColorModel(
-      url: 'https://xxxxxx. $i',
-      title: 'Name：$i',
-    );
-  });
-
   Future<List<ColorModel>> fetchAlbum() async {
     final response = await http.get(Uri.https('jsonplaceholder.typicode.com', 'photos'));
 
@@ -52,9 +45,6 @@ class ColorStateWidget extends State<ContentWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Content Page"),
-        ),
         body: Center(
           child: FutureBuilder<List<ColorModel>> (
             future: futureData,
@@ -65,7 +55,7 @@ class ColorStateWidget extends State<ContentWidget> {
                         crossAxisCount: 3, //每行三列
                         childAspectRatio: 1.0 //显示区域宽高相等
                     ),
-                        itemCount: listItems.length,
+                        itemCount: snapshot.data.length,
                         itemBuilder: (context, index) {
                           return
                             new Image.network(snapshot.data[index].url);
